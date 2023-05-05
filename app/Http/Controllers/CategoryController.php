@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdatetegoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -35,26 +36,28 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return response()->json(
-            [
-                'resp' => true,
-                'user' => $category,
-            ]
-        );
+        return response()->json([
+            'resp' => true,
+            'user' => $category,
+        ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatetegoryRequest $request, Category $category)
     {
-        //
+        $category->update($request->all());
+        return response()->json([
+            'res' => true,
+            'mensaje' => 'Paciente actualizado correctamente'
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
         //
     }
