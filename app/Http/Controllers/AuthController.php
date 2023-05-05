@@ -16,7 +16,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $user = User::with('roles')->where('email', $request->email)->first();
-        if (!$user || Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'message' => ['Las credenciales son incorrectas'],
             ]);
