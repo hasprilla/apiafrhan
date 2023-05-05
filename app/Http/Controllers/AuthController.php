@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
@@ -46,10 +45,10 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccesToken()->delete();
+        $request->user()->currentAccessToken()->delete();
         return response()->json([
             'res' => true,
-            'message' => 'Token eliminado correctamente'
+            'message' => 'Token eliminado correctamente',
         ], 200);
     }
 }
