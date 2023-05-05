@@ -25,13 +25,24 @@ Route::group([
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
     Route::post('register', [AuthController::class, 'register']);
 });
 
-Route::apiResource('categories', CategoryController::class);
+Route::group([
+    'middleware' => ['auth:sanctum', 'api'],
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
+});
+
+Route::group([
+    'middleware' => ['auth:sanctum']
+], function ($router) {
+    Route::apiResource('categories', CategoryController::class);
+});
+
     // Route::get('categories', [CategoryController::class, 'index']);
     // Route::post('categories', [CategoryController::class, 'store']);
     // Route::get('categories/{category}', [CategoryController::class, 'show']);
