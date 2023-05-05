@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
+
 
 class CategoryResurce extends JsonResource
 {
@@ -14,6 +16,10 @@ class CategoryResurce extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'description' => Str::upper($this->description),
+            'status' =>  $this->status,
+        ];
     }
 }

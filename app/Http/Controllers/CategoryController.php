@@ -23,13 +23,13 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        Category::create($request->all());
-        return response()->json(
-            [
-                'res' => true,
-                'msg' => 'Categoria guardada',
-            ]
-        );
+        // return response()->json(
+        //     [
+        //         'res' => true,
+        //         'msg' => 'Categoria guardada',
+        //     ]
+        // );
+        return new CategoryResurce(Category::create($request->all()));
     }
 
     /**
