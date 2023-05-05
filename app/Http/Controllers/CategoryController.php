@@ -23,7 +23,9 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        return new CategoryResurce(Category::create($request->all()));
+        return (new CategoryResurce(Category::create($request->all())))->additional([
+            ['message' => 'Categoria Resgistrada Correctamente']
+        ]);
     }
 
     /**
@@ -40,7 +42,9 @@ class CategoryController extends Controller
     public function update(UpdatetegoryRequest $request, Category $category)
     {
         $category->update($request->all());
-        return new CategoryResurce($category);
+        return (new CategoryResurce($category))->additional([
+            ['message' => 'Categoria Actualizada Correctamente']
+        ]);
     }
 
     /**
@@ -49,6 +53,8 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return new CategoryResurce($category);
+        return (new CategoryResurce($category))->additional([
+            ['message' => 'Categoria Eliminada Correctamente']
+        ]);
     }
 }

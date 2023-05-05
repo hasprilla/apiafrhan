@@ -22,4 +22,11 @@ class CategoryResurce extends JsonResource
             'status' =>  $this->status,
         ];
     }
+
+    public function with(Request $request)
+    {
+        return [
+            'res' => true,
+        ];
+    }
 }
