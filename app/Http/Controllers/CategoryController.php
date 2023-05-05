@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $category->update($request->all());
         return (new CategoryResurce($category))->additional([
             ['message' => 'Categoria Actualizada Correctamente']
-        ]);
+        ])->response()->setStatusCode(202);
     }
 
     /**
