@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdatetegoryRequest;
+use App\Http\Resources\CategoryResurce;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::all();
+        return CategoryResurce::collection(Category::all());
     }
 
     /**
