@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return CategoryResurce::collection(Category::all());
+        return CategoryResurce::collection(Category::paginate(3));
     }
 
     /**
