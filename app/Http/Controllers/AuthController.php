@@ -79,7 +79,8 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-            'access_token' => $token,
+            'user'=> auth()->user(),
+            'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
@@ -87,23 +88,24 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        $validartor = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|email|max:6',
+            'password' => 'required|string|min:6',
         ]);
-        if ($validartor->fails()) {
-            require response()->json($validartor->errors()->toJson(), 400);
+        
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
         }
 
         $user = User::create(array_merge(
-            $validartor->validate(),
+            $validator->validate(),
             ['password' => bcrypt($request->password)]
         ));
 
         return response()->json([
-            'message' => 'Usuario creado',
-            'user' => $user,
+            'message' => '¡Usuario registrado exitosamente!',
+            'user' => $user
         ], 201);
     }
 }
