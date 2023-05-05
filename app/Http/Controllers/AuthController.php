@@ -29,10 +29,10 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = request(['email', 'password']);
-
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+
 
         return $this->respondWithToken($token);
     }
@@ -79,7 +79,7 @@ class AuthController extends Controller
     protected function respondWithToken($token)
     {
         return response()->json([
-            'user'=> auth()->user(),
+            'user' => auth()->user(),
             'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
@@ -93,7 +93,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6',
         ]);
-        
+
         if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
@@ -102,6 +102,8 @@ class AuthController extends Controller
             $validator->validate(),
             ['password' => bcrypt($request->password)]
         ));
+
+        $user->roles()->attach($request->roles);
 
         return response()->json([
             'message' => '¡Usuario registrado exitosamente!',
