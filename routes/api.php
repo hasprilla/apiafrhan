@@ -31,7 +31,7 @@ Route::group([
 Route::group([
     'middleware' => ['auth:sanctum', 'api'],
     'prefix' => 'auth'
-], function ($router) {
+], function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
@@ -39,7 +39,7 @@ Route::group([
 
 Route::group([
     'middleware' => ['auth:sanctum']
-], function ($router) {
+], function () {
     Route::apiResource('categories', CategoryController::class);
 });
 

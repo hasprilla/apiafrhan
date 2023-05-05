@@ -43,13 +43,24 @@ class AuthController extends Controller
         ], 200);
     }
 
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'res' => true,
-            'message' => 'Token eliminado correctamente',
+            'message' => 'Token eliminado correctamente'
         ], 200);
-        
     }
+
+
+    // public function logout(Request $request)
+    // {
+    //     $request->user()->currentAccessToken()->delete();
+    //     return response()->json([
+    //         'res' => true,
+    //         'message' => 'Token eliminado correctamente',
+    //     ], 200);
+
+    // }
 }
