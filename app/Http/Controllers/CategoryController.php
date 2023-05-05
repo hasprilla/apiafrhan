@@ -23,12 +23,6 @@ class CategoryController extends Controller
      */
     public function store(CreateCategoryRequest $request)
     {
-        // return response()->json(
-        //     [
-        //         'res' => true,
-        //         'msg' => 'Categoria guardada',
-        //     ]
-        // );
         return new CategoryResurce(Category::create($request->all()));
     }
 
@@ -37,10 +31,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return response()->json([
-            'resp' => true,
-            'user' => $category,
-        ], 200);
+        return new CategoryResurce($category);
     }
 
     /**
@@ -49,10 +40,7 @@ class CategoryController extends Controller
     public function update(UpdatetegoryRequest $request, Category $category)
     {
         $category->update($request->all());
-        return response()->json([
-            'res' => true,
-            'mensaje' => 'Paciente actualizado correctamente'
-        ], 200);
+        return new CategoryResurce($category);
     }
 
     /**
