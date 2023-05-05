@@ -35,4 +35,5 @@ Route::group([
     'middleware' => 'api',
 ], function ($router) {
     Route::get('categories', [CategoryController::class, 'index']);
+    Route::post('categories', [CategoryController::class, 'store']);
 });
