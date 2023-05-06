@@ -23,9 +23,10 @@ class AuthController extends Controller
         }
         $token = $user->createToken($request->email)->plainTextToken;
         return response()->json([
-            'res' => true,
-            'token' => $token,
-            'user' => $user
+            'data' => [
+                'user' => $user,
+                'token' => $token,
+            ]
         ], 200);
     }
 
@@ -50,7 +51,6 @@ class AuthController extends Controller
 
         auth()->user()->tokens()->delete();
         return response()->json([
-            'res' => true,
             'message' => 'Token eliminado correctamente'
         ], 200);
     }
