@@ -13,4 +13,14 @@ class Role extends Model
     {
         return $this->belongsToMany(User::class, 'roles_asignados');
     }
+
+    protected $hidden = [
+        "id",
+        "descripcion",
+        "pivot",
+        'created_at',
+        'updated_at',
+    ];
+
+
 }

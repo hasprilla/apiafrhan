@@ -38,7 +38,7 @@ Route::group([
 });
 
 Route::group([
-    'middleware' => ['auth:sanctum']
+    // 'middleware' => ['auth:sanctum']
 ], function () {
     Route::apiResource('categories', CategoryController::class);
 });
