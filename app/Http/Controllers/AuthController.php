@@ -10,12 +10,15 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $user = User::with('roles')->where('email', $request->email)->first();
+        $user = User::with(array('roles' => function($query) {
+             $query->select('nombre');
+        }))->where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
                 'message' => ['Las credenciales son incorrectas'],
@@ -38,12 +41,28 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
         $user->roles()->attach($request->roles);
-
         return response()->json([
             'message' => '¡Usuario registrado exitosamente!',
             'user' => $user
         ], 200);
     }
+
+
+    public function refresh()
+    {
+       $auth = auth()->user();
+       $user = User::with(array('roles' => function($query) {
+        $query->select('nombre');
+   }))->where('email', $auth->email)->first();
+       $token = $user->createToken($user->email)->plainTextToken;
+        return response()->json([
+        "data"=> [
+            'user' => $user,
+            'token' => $token,
+        ]
+        ]);
+    }
+
 
 
     public function logout(Request $request)

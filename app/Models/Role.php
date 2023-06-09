@@ -15,8 +15,8 @@ class Role extends Model
     }
 
     protected $hidden = [
-        "id",
-        "descripcion",
+        // "id",
+        // "descripcion",
         "pivot",
         'created_at',
         'updated_at',
